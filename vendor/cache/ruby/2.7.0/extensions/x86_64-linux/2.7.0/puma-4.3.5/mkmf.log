@@ -1,0 +1,119 @@
+have_library: checking for BIO_read() in -lcrypto... -------------------- no
+
+"gcc -o conftest -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/x86_64-linux -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/backward -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0 -I.    -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -lruby  -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+"gcc -o conftest -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/x86_64-linux -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/backward -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0 -I.    -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -lruby -lcrypto  -lm   -lc"
+conftest.c: En la función ‘t’:
+conftest.c:14:57: error: ‘BIO_read’ no se declaró aquí (primer uso en esta función)
+   14 | int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+      |                                                         ^~~~~~~~
+conftest.c:14:57: nota: cada identificador sin declarar se reporta sólo una vez para cada función en el que aparece
+conftest.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/x86_64-linux -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/backward -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0 -I.    -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -lruby -lcrypto  -lm   -lc"
+/usr/bin/ld: no se puede encontrar -lcrypto
+collect2: error: ld devolvió el estado de salida 1
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void BIO_read();
+15: int t(void) { BIO_read(); return 0; }
+/* end */
+
+--------------------
+
+have_library: checking for BIO_read() in -llibeay32... -------------------- no
+
+"gcc -o conftest -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/x86_64-linux -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/backward -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0 -I.    -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -lruby -llibeay32  -lm   -lc"
+conftest.c: En la función ‘t’:
+conftest.c:14:57: error: ‘BIO_read’ no se declaró aquí (primer uso en esta función)
+   14 | int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+      |                                                         ^~~~~~~~
+conftest.c:14:57: nota: cada identificador sin declarar se reporta sólo una vez para cada función en el que aparece
+conftest.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+/* end */
+
+"gcc -o conftest -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/x86_64-linux -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/backward -I/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0 -I.    -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable  -fPIC conftest.c  -L. -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic     -Wl,-rpath,/home/saint/.rvm/rubies/ruby-2.7.0/lib -L/home/saint/.rvm/rubies/ruby-2.7.0/lib -lruby -llibeay32  -lm   -lc"
+/usr/bin/ld: no se puede encontrar -llibeay32
+collect2: error: ld devolvió el estado de salida 1
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void BIO_read();
+15: int t(void) { BIO_read(); return 0; }
+/* end */
+
+--------------------
+

@@ -1,0 +1,84 @@
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
+/home/saint/.rvm/rubies/ruby-2.7.0/bin/ruby -I /home/saint/.rvm/rubies/ruby-2.7.0/lib/ruby/2.7.0 -r ./siteconf20200715-17737-114u5ir.rb extconf.rb
+checking for sqlite3.h... yes
+checking for pthread_create() in -lpthread... yes
+checking for -ldl... yes
+checking for sqlite3_libversion_number() in -lsqlite3... yes
+checking for rb_proc_arity()... yes
+checking for rb_integer_pack()... yes
+checking for sqlite3_initialize()... yes
+checking for sqlite3_backup_init()... yes
+checking for sqlite3_column_database_name()... yes
+checking for sqlite3_enable_load_extension()... yes
+checking for sqlite3_load_extension()... yes
+checking for sqlite3_open_v2()... yes
+checking for sqlite3_prepare_v2()... yes
+checking for sqlite3_int64 in sqlite3.h... yes
+checking for sqlite3_uint64 in sqlite3.h... yes
+creating Makefile
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
+make "DESTDIR=" clean
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
+make "DESTDIR="
+compiling aggregator.c
+compiling backup.c
+compiling database.c
+database.c: En la función ‘rb_sqlite3_open_v2’:
+database.c:38:9: aviso: variable ‘flags’ sin usar [-Wunused-variable]
+   38 |   VALUE flags;
+      |         ^~~~~
+database.c: En la función ‘exec_batch’:
+database.c:726:57: aviso: se pasa el argumento 3 de ‘sqlite3_exec’ desde un tipo de puntero incompatible [-Wincompatible-pointer-types]
+  726 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {también conocido como int (*)(long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+/usr/include/sqlite3.h:405:9: nota: se esperaba ‘int (*)(void *, int,  char **, char **)’ pero el argumento es de tipo ‘int (*)(VALUE,  int,  char **, char **)’ {también conocido como ‘int (*)(long unsigned int,  int,  char **, char **)’}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:726:81: aviso: el paso del argumento 4 de ‘sqlite3_exec’ crea un puntero desde un entero sin una conversión [-Wint-conversion]
+  726 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                                                 ^~~~~~~~~~~~
+      |                                                                                 |
+      |                                                                                 VALUE {también conocido como long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+/usr/include/sqlite3.h:406:3: nota: se esperaba ‘void *’ pero el argumento es de tipo ‘VALUE’ {también conocido como ‘long unsigned int’}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c:728:57: aviso: se pasa el argumento 3 de ‘sqlite3_exec’ desde un tipo de puntero incompatible [-Wincompatible-pointer-types]
+  728 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {también conocido como int (*)(long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+/usr/include/sqlite3.h:405:9: nota: se esperaba ‘int (*)(void *, int,  char **, char **)’ pero el argumento es de tipo ‘int (*)(VALUE,  int,  char **, char **)’ {también conocido como ‘int (*)(long unsigned int,  int,  char **, char **)’}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:728:84: aviso: el paso del argumento 4 de ‘sqlite3_exec’ crea un puntero desde un entero sin una conversión [-Wint-conversion]
+  728 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                                                    ^~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    VALUE {también conocido como long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+/usr/include/sqlite3.h:406:3: nota: se esperaba ‘void *’ pero el argumento es de tipo ‘VALUE’ {también conocido como ‘long unsigned int’}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+compiling exception.c
+compiling sqlite3.c
+compiling statement.c
+linking shared-object sqlite3/sqlite3_native.so
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 sqlite3_native.so ./.gem.20200715-17737-ysuk2x/sqlite3

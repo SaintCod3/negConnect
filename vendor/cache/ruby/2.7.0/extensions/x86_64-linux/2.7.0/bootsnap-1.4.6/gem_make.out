@@ -1,0 +1,37 @@
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/bootsnap-1.4.6/ext/bootsnap
+/home/saint/.rvm/rubies/ruby-2.7.0/bin/ruby -I /home/saint/.rvm/rubies/ruby-2.7.0/lib/ruby/2.7.0 -r ./siteconf20200715-17737-524ool.rb extconf.rb
+creating Makefile
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+bootsnap.c: En la función ‘bs_cache_path’:
+bootsnap.c:272:39: aviso: formato ‘%llx’ espera un argumento de tipo ‘long long unsigned int’, pero el argumento 5 es de tipo ‘uint64_t’ {también conocido como ‘long unsigned int’} [-Wformat=]
+  272 |   sprintf(*cache_path, "%s/%02x/%014llx", cachedir, first_byte, remainder);
+      |                                 ~~~~~~^                         ~~~~~~~~~
+      |                                       |                         |
+      |                                       long long unsigned int    uint64_t {también conocido como long unsigned int}
+      |                                 %014lx
+bootsnap.c: En la función ‘prot_input_to_storage’:
+bootsnap.c:814:7: aviso: se pasa el argumento 3 de ‘rb_rescue2’ desde un tipo de puntero incompatible [-Wincompatible-pointer-types]
+  814 |       rescue_input_to_storage, Qnil,
+      |       ^~~~~~~~~~~~~~~~~~~~~~~
+      |       |
+      |       VALUE (*)(VALUE) {también conocido como long unsigned int (*)(long unsigned int)}
+In file included from /home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby.h:33,
+                 from bootsnap.c:15:
+/home/saint/.rvm/rubies/ruby-2.7.0/include/ruby-2.7.0/ruby/ruby.h:1988:40: nota: se esperaba ‘VALUE (*)(VALUE,  VALUE)’ {también conocido como ‘long unsigned int (*)(long unsigned int,  long unsigned int)’} pero el argumento es de tipo ‘VALUE (*)(VALUE)’ {también conocido como ‘long unsigned int (*)(long unsigned int)’}
+ 1988 | VALUE rb_rescue2(VALUE(*)(VALUE),VALUE,VALUE(*)(VALUE,VALUE),VALUE,...);
+      |                                        ^~~~~~~~~~~~~~~~~~~~~
+bootsnap.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+linking shared-object bootsnap/bootsnap.so
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/bootsnap-1.4.6/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.so ./.gem.20200715-17737-1ts1uxg/bootsnap

@@ -1,0 +1,36 @@
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/puma-4.3.5/ext/puma_http11
+/home/saint/.rvm/rubies/ruby-2.7.0/bin/ruby -I /home/saint/.rvm/rubies/ruby-2.7.0/lib/ruby/2.7.0 -r ./siteconf20200715-17737-16wzinn.rb extconf.rb
+checking for BIO_read() in -lcrypto... no
+checking for BIO_read() in -llibeay32... no
+creating Makefile
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/puma-4.3.5/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/puma-4.3.5/ext/puma_http11
+make "DESTDIR="
+compiling http11_parser.c
+compiling io_buffer.c
+compiling mini_ssl.c
+mini_ssl.c: En la función ‘raise_error’:
+mini_ssl.c:540:7: aviso: la función puede ser candidata para el atributo ‘noreturn’ [-Wsuggest-attribute=noreturn]
+  540 | VALUE raise_error(VALUE self) {
+      |       ^~~~~~~~~~~
+mini_ssl.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+compiling puma_http11.c
+puma_http11.c: En la función ‘http_field’:
+puma_http11.c:203:22: aviso: declaración implícita de la función ‘isspace’ [-Wimplicit-function-declaration]
+  203 |   while (vlen > 0 && isspace(value[vlen - 1])) vlen--;
+      |                      ^~~~~~~
+puma_http11.c: En el nivel principal:
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-self-assign’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-parentheses-equality’
+cc1: aviso: no se reconoce la opción de línea de órdenes ‘-Wno-constant-logical-operand’
+linking shared-object puma/puma_http11.so
+
+current directory: /home/saint/Escritorio/proyecto/negConnect/vendor/cache/ruby/2.7.0/gems/puma-4.3.5/ext/puma_http11
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 puma_http11.so ./.gem.20200715-17737-dioz8a/puma
