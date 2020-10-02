@@ -65,7 +65,7 @@ class MapContainer extends Component {
      )
        .then((response) => response.json())
        .then((data) => {
-         console.log(data.results[0].formatted_address);
+         console.log(data.results[0]);
        });
   };
 
@@ -113,7 +113,7 @@ class MapContainer extends Component {
       window.location.reload(false);
     }
     fetch(
-      `/api/v1/requests?city=${sessionStorage.getItem("currentCity")}&page=${
+      `/api/v1/requests?&page=${
         this.state.currentPage
       }`,
       {

@@ -48,7 +48,6 @@ class Navegation extends Component {
         this.setState({
           request_types: data,
         });
-        console.log(data);
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
@@ -116,12 +115,17 @@ class Navegation extends Component {
           lng: lng,
           lat: lat,
           status_id: 1,
-          city: city,
+          isActive: true,
+          city: city
         }),
       })
         .then((response) => response.json())
         .then((data) => {
+          this.setState({
+            show: false
+          })
           history.push(`/requests/${data.id}/messenger`);
+          window.location.reload(false);
         })
         .catch((error) => {
           if (error.name !== "AbortError") {

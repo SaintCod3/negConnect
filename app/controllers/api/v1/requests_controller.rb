@@ -7,7 +7,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     # Defining the page (@page can be used to return the current page), the page starts on 0
     @page = params[:page].to_i
     # Retrieve total of requests 
-    @total = Request.where( requests: { city: params[:city], status_id: 1}).count
+    @total = Request.where( requests: { status_id: 1, isActive: true}).count
 
     # Getting the total pages
     @total_pages = @total / @limit
@@ -17,11 +17,18 @@ class Api::V1::RequestsController < Api::V1::BaseController
     end
 
     # Retrieve the requests from the db 
-    @request = Request.includes(:volunteers).where(requests: { city: params[:city]}).offset(@page * @limit).limit(@limit)
+    @request = Request.includes(:volunteers).where(requests: { status_id: 1, isActive: true }).offset(@page * @limit).limit(@limit)
     # Render as JSON the requests, user and volunteers of each request, total requests, per_page, total_pages for pagination 
     render json: {request: @request.as_json({except: :user_id,
       :include => [user: {except: [:id, :password_digest, :email, :created_at, :updated_at]}, volunteers: {only: [:id,:user_id]}, request_type: {only: [:name]}, status: {only: [:name]}],
     }),total_requests: @total, per_page: @limit, total_pages: @total_pages}
+    
+    #testing a new way of doing stuff
+    @request_to_close = Request.where('created_at > ?', Time.current) 
+    @request_to_close.each do |rtc|
+      rtc.isActive = false
+      rtc.save
+    end
   end
 
   def my_requests

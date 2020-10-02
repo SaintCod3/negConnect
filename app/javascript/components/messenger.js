@@ -87,9 +87,15 @@ class Messenger extends Component {
         <style type="text/css">{this.custom()}</style>
         <Navegation />
         <Container fluid>
-          <Row className=" text-center min-vh-50">
-            <Col className="text-center profileWrap my-auto py-4">
-              <h4 className="fancyText font-weight-light">{request_title}</h4>
+          <Row className="min-vh-50">
+            <Col className="messengerWrap">
+              <Container>
+                <h4 className="fancyText font-weight-light">
+                  <p className="text-center font-weight-light">Request</p>
+                  <hr className="bg-white w-50" />
+                  {request_title}
+                </h4>
+              </Container>
             </Col>
           </Row>
           <Container className="py-4">
