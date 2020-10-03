@@ -28,6 +28,18 @@
   text-shadow: 2px 2px 4px #000000;
   text-align: center;
 }
+.chatWrap{
+  background: linear-gradient(rgba(20, 20, 20, 0.6), rgba(20, 20, 20, 0.6)),
+  url(/assets/background2.jpg) center center;
+  background-size: cover;
+  background-color: snow;
+  color:white;
+  background-size: cover;
+  min-height: 20vh;
+  text-align: justify;
+  overflow-wrap: break-word;
+  padding: 50px 0;
+}
 
 .messengerWrap{
   background: linear-gradient(rgba(20, 20, 20, 0.6), rgba(20, 20, 20, 0.6)),
@@ -57,31 +69,6 @@ textarea{
   box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.096);
   resize: none;
   overflow:auto;
-}
-
-.message-wrapper{
-  width: auto;
-  border: 1px solid #e4e7ec;
-  border-radius: 20px;
-  background-color: #f9fafb;
-  padding: 24px; /* the container will keep the padding untouched */
-  max-height: 145px; /* added padding to the height of the .message-text */
-  box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.096);
-}
-
-.message{
-  box-sizing: border-box;
-  height: auto;
-  min-height: 41px;
-  max-height: 97px;
-  width: 387px;
-  border: 1px solid #e4e7ec;
-  border-radius: 20px;
-  background-color: #f9fafb;
-  outline: none;
-  padding: 0 24px 0 24px;
-  overflow: hidden;
-  box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.096);
 }
 
 .rightSide{
@@ -209,31 +196,42 @@ textarea{
 -webkit-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
 -moz-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
 box-shadow: 2px 2px 2px 0px rgba(163, 163, 163, 0.2);
-margin-bottom: 2vh;
+margin-bottom: 2em;
 padding: 1em;
-color: black;
+background-color: #218aff;
+color: white;
 border-radius: 20px 0px 20px 20px;
-min-width: auto;
-align-items: flex-start;
+width: fit-content;
+align-self: flex-start;
+float: right;
+ clear: both;
+ word-break: break-all;
+}
+.bubbleMe h4 {
+  color: black;
 }
 
 .bubbleUser{
 -webkit-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
 -moz-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
 box-shadow: 2px 2px 2px 0px rgba(163, 163, 163, 0.2);
-margin-bottom: 2vh;
+margin-bottom: 2em;
 padding: 1em;
-background-color: white;
+background-color: #EBEBEB;
 color: black;
 border-radius: 0px 20px 20px 20px;
-width: auto;
+  align-self: flex-end;
+ word-break: break-all;
+ float: left;
+ clear: both;
+}
+.bubbleUser h4 {
+  color: black;
 }
 
 .chat{
-  position: relative;
-  background-color: #efefef;
+  background: #fdfdfd;
   min-height: 100vh;
-  background-size: cover;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
   -moz-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
   box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
@@ -250,7 +248,7 @@ width: auto;
 }
 
 .chatBox{
-  background-color: #efefef;
+  background-color: #fdfdfd;
   position: fixed;
   width: 100%;
   padding: 1em;

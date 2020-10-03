@@ -323,8 +323,7 @@ class Profile extends Component {
                   <ListGroup className="my-4">
                     {volunteered.map((volunteer, i) => (
                       <ListGroup.Item className="text-left" key={i}>
-                        <h4 key={i}>
-                          {" "}
+                        <h4 key={i} className="description">
                           {volunteer.description.length > 50
                             ? volunteer.description.slice(0, 50) + "..."
                             : volunteer.description}

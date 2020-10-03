@@ -130,8 +130,14 @@ class Chat extends Component {
           </Toast.Header>
           <Toast.Body>{msg}</Toast.Body>
         </Toast>
-        <div className="text-center bg-grey py-2">
-          <h4 className="font-weight-light">Request: {request}</h4>
+        <div className="text-center chatWrap py-4">
+          <Container>
+            <h4 className="font-weight-light">
+              <p className="text-center font-weight-light">Request</p>
+              <hr className="bg-white w-50" />
+            </h4>
+          </Container>
+          <h4 className="font-weight-light">{request}</h4>
         </div>
         <Container fluid className="chat py-4">
           <Row>
@@ -147,22 +153,23 @@ class Chat extends Component {
                       <h4
                         className={
                           message.user_id === currentUser.id
-                            ? "text-right"
-                            : "text-left"
+                            ? "float-right"
+                            : "float-left"
                         }
-                      >
-                        {message.user_id === currentUser.id
-                          ? "You"
-                          : message.user.first_name}
-                      </h4>
+                      ></h4>
                     </div>
                     <div
                       className={
                         message.user_id === currentUser.id
-                          ? "bubbleMe bg-light"
-                          : "bubbleUser"
+                          ? "bubbleMe text-right"
+                          : "bubbleUser text-left"
                       }
                     >
+                      <h4 className="font-weight-light">
+                        {message.user_id === currentUser.id
+                          ? "You"
+                          : message.user.first_name}
+                      </h4>
                       <p>{message.chat}</p>
                     </div>
                   </>
