@@ -47,7 +47,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     end
 
     # Retrieve the requests from the db 
-    @request = Request.includes(:volunteers).where(requests: { status_id: 1, user_id: params[:user_id]}).offset(@page * @limit).limit(@limit)
+    @request = Request.includes(:volunteers).where(requests: { status_id: 1, user_id: params[:user_id]}).offset(@page * @limit).limit(@limit).order(created_at: :desc)
     # Render as JSON the requests, user and volunteers of each request, total requests, per_page, total_pages for pagination 
     render json: {request: @request.as_json({except: :user_id,
       :include => [volunteers: {only: [:id,:user_id]}],
@@ -70,7 +70,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
       @total_pages += 1
     end
     
-    @volunteer = @user.volunteered_requests.offset(@page * @limit).limit(@limit)
+    @volunteer = @user.volunteered_requests.offset(@page * @limit).limit(@limit).order(created_at: :desc)
     render json: {volunteer: @volunteer.as_json,total_requests: @total, per_page: @limit, total_pages: @total_pages}
   end
 

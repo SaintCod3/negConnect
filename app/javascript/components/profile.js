@@ -258,7 +258,7 @@ class Profile extends Component {
           <Row className=" text-center min-vh-50">
             <Col className="text-center profileWrap my-auto py-4">
               <Image src={userAvatar} roundedCircle className="mb-4 avatar" />
-              <h4 className="fancyText font-weight-light">
+              <h4 className="font-weight-light">
                 {currentUser.first_name} {currentUser.last_name}
               </h4>
             </Col>
@@ -276,7 +276,7 @@ class Profile extends Component {
                   <ListGroup className="my-4">
                     {requests.map((request, i) => (
                       <ListGroup.Item className="text-left" key={i}>
-                        <h4 key={request.id}>
+                        <h4 key={request.id} className="description">
                           {request.description.length > 50
                             ? request.description.slice(0, 50) + "..."
                             : request.description}

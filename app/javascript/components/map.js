@@ -157,7 +157,7 @@ class MapContainer extends Component {
           }}
           icon={{
             url: `http://maps.google.com/mapfiles/ms/icons/${
-              request.request_types_id === 1 ? "blue-dot" : "red-dot"
+              request.request_type_id === 1 ? "blue-dot" : "red-dot"
             }.png`,
           }}
           onClick={this.onMarkerClick}
@@ -220,7 +220,6 @@ class MapContainer extends Component {
         <Modal
           show={show}
           onHide={this.onClose}
-          backdrop="static"
           keyboard={false}
           size="md"
           aria-labelledby="contained-modal-title-vcenter"
@@ -232,15 +231,16 @@ class MapContainer extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Description: {this.state.selectedRequest.description}</p>
+            <p className="description">
+              {this.state.selectedRequest.description}
+            </p>
+            <hr />
+            <p>Location: {this.state.selectedRequest.location} </p>
             <p>Status: {this.state.selectedRequest.status}</p>
             <p>Request type: {this.state.selectedRequest.request_type}</p>
             <p>Volunteers: {this.state.selectedRequest.volunteers} /5</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="outline-secondary" onClick={this.onClose}>
-              Close
-            </Button>
             <Button
               variant="greenCustom"
               onClick={() =>

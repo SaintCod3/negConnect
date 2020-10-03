@@ -189,7 +189,7 @@ class Edit_profile extends Component {
           <Row className=" text-center min-vh-50">
             <Col className="text-center profileWrap my-auto py-4">
               <Image src={userAvatar} roundedCircle className="mb-4 avatar" />
-              <h4 className="fancyText font-weight-light">
+              <h4 className="font-weight-light">
                 {currentUser.first_name} {currentUser.last_name}
               </h4>
             </Col>
