@@ -116,19 +116,19 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def reset_request
-    @request_to_reset = Request.find(params[:id])
-    @user = find(params[:user_id])
+    @request_to_reset = Request.find(params[:request_id])
+    @user = User.find(params[:user_id])
 
-    if @request_to_reset && @request_to_reset.user_id == @user
+    if @request_to_reset && @request_to_reset.user_id == @user && @request_to_reset.req_time == DateTime.now - 24.hours && @request_to_reset.status_id == 1
       @request_volunteers = Volunteer.where(request_id:
     params[:request_id])
 
     if @request_volunteers
-      @request_volunteers.destroy_all
-    end 
-
+      @request_volunteers.destroy_all 
+      render json: {}, status: 200
     else 
-      render json: {}, status: 403
+      render json: {}, status: 403 
+      end
     end
   end
 
