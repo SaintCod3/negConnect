@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get 'my_requests', to: "requests#my_requests"
       post "rails/active_storage/direct_upload", to: "direct_upload#create"
       get "requests_voluntereed", to: "requests#requests_voluntereed"
+      get "my_disabled_requests", to: "requests#my_disabled_requests"
       get "counter", to: "requests#counter"
       resources :requests, only: [:index, :show, :create, :destroy, :update] do
         

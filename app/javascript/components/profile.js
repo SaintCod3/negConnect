@@ -30,6 +30,11 @@ class Profile extends Component {
       voTotal: 0,
       voPages: 0,
       voCurrentPage: 0,
+      inactives: [],
+      iPerPage: 0,
+      iTotal: 0,
+      iPages: 0,
+      iCurrentPage: 0,
       msg: "",
       show: false,
     };
@@ -37,6 +42,8 @@ class Profile extends Component {
     this.changePageDown = this.changePageDown.bind(this);
     this.voChangePageUp = this.voChangePageUp.bind(this);
     this.voChangePageDown = this.voChangePageDown.bind(this);
+    this.iChangePageUp = this.iChangePageUp.bind(this);
+    this.iChangePageDown = this.iChangePageDown.bind(this);
     this.chat = this.chat.bind(this);
     this.createConversation = this.createConversation.bind(this);
   }
@@ -46,61 +53,87 @@ class Profile extends Component {
   componentDidMount() {
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
     if (currentUser === "") {
-    window.location.reload(false);
+      window.location.reload(false);
     } else {
-    fetch(
-      `/api/v1/my_requests?user_id=${currentUser.id}&page=${this.state.currentPage}`,
-      {
-        method: "GET",
-        signal: this.controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("Token")
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          requests: data.request,
-          total: data.total_requests,
-          perPage: data.per_page,
-          pages: data.total_pages,
-        });
-        console.log(data);
-      })
-      .catch((error) => {
-        if (error.name !== "AbortError") {
+      fetch(
+        `/api/v1/my_requests?user_id=${currentUser.id}&page=${this.state.currentPage}`,
+        {
+          method: "GET",
+          signal: this.controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + sessionStorage.getItem("Token"),
+          },
         }
-      });
-    fetch(
-      `/api/v1/requests_voluntereed?user_id=${currentUser.id}&page=${this.state.voCurrentPage}`,
-      {
-        method: "GET",
-        signal: this.controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("Token"),
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          volunteered: data.volunteer,
-          voTotal: data.total_requests,
-          voPerPage: data.per_page,
-          voPages: data.total_pages,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            requests: data.request,
+            total: data.total_requests,
+            perPage: data.per_page,
+            pages: data.total_pages,
+          });
+          console.log(data);
+        })
+        .catch((error) => {
+          if (error.name !== "AbortError") {
+          }
         });
-        console.log(data);
-      })
-      .catch((error) => {
-        if (error.name !== "AbortError") {
+      fetch(
+        `/api/v1/requests_voluntereed?user_id=${currentUser.id}&page=${this.state.voCurrentPage}`,
+        {
+          method: "GET",
+          signal: this.controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + sessionStorage.getItem("Token"),
+          },
         }
-      });
-   }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            volunteered: data.volunteer,
+            voTotal: data.total_requests,
+            voPerPage: data.per_page,
+            voPages: data.total_pages,
+          });
+          console.log(data);
+        })
+        .catch((error) => {
+          if (error.name !== "AbortError") {
+          }
+        });
+      fetch(
+        `/api/v1/my_disabled_requests?user_id=${currentUser.id}&page=${this.state.iCurrentPage}`,
+        {
+          method: "GET",
+          signal: this.controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: "Bearer " + sessionStorage.getItem("Token"),
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            inactives: data.inactive,
+            iTotal: data.total_requests,
+            iPerPage: data.per_page,
+            iPages: data.total_pages,
+          });
+          console.log(data);
+        })
+        .catch((error) => {
+          if (error.name !== "AbortError") {
+          }
+        });
+    }
   }
   componentWillUnmount() {
     //We abort the fetch request when we unmount the component
@@ -112,8 +145,8 @@ class Profile extends Component {
     history.push(`/requests/${request}/messenger`);
   }
 
-  createConversation(request){
-    const { history } = this.props
+  createConversation(request) {
+    const { history } = this.props;
     const user_id = JSON.parse(sessionStorage.getItem("User")).id;
     this.state.currentPage += 1;
     fetch(`/api/v1/requests/${request}/conversations`, {
@@ -130,19 +163,22 @@ class Profile extends Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        if(!data.error){
+        if (!data.error) {
           history.push(`/requests/${request}/conversations/${data.id}/`);
         } else {
-          history.push(`/requests/${request}/conversations/${data.error[0].id}/`);
+          history.push(
+            `/requests/${request}/conversations/${data.error[0].id}/`
+          );
         }
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
-          console.log(error)
+          console.log(error);
         }
       });
   }
 
+  // Pagination for My Requests, My inactives Requests and Volunteered requests
   changePageUp() {
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
     this.state.currentPage += 1;
@@ -153,8 +189,8 @@ class Profile extends Component {
         signal: this.controller.signal,
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("Token"),
+          Accept: "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("Token"),
         },
       }
     )
@@ -176,8 +212,8 @@ class Profile extends Component {
         signal: this.controller.signal,
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("Token"),
+          Accept: "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("Token"),
         },
       }
     )
@@ -199,8 +235,8 @@ class Profile extends Component {
         signal: this.controller.signal,
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("Token"),
+          Accept: "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("Token"),
         },
       }
     )
@@ -234,6 +270,53 @@ class Profile extends Component {
         });
       });
   }
+
+  iChangePageUp() {
+    const currentUser = JSON.parse(sessionStorage.getItem("User"));
+    this.state.iCurrentPage += 1;
+    fetch(
+      `/api/v1/my_disabled_requests?user_id=${currentUser.id}&page=${this.state.iCurrentPage}`,
+      {
+        method: "GET",
+        signal: this.controller.signal,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("Token"),
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          inactives: data.inactive,
+        });
+      });
+  }
+
+  iChangePageDown() {
+    const currentUser = JSON.parse(sessionStorage.getItem("User"));
+    this.state.iCurrentPage -= 1;
+    fetch(
+      `/api/v1/my_disabled_requests?user_id=${currentUser.id}&page=${this.state.iCurrentPage}`,
+      {
+        method: "GET",
+        signal: this.controller.signal,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("Token"),
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          inactives: data.inactive,
+        });
+      });
+  }
+
   render() {
     const {
       requests,
@@ -244,6 +327,10 @@ class Profile extends Component {
       voCurrentPage,
       voTotal,
       total,
+      inactives,
+      iTotal,
+      iCurrentPage,
+      iPages
     } = this.state;
     if (!sessionStorage.getItem("Token") || !sessionStorage.getItem("User")) {
       return <Redirect to="/login" />;
@@ -265,7 +352,7 @@ class Profile extends Component {
           </Row>
           <Container className="my-4">
             <Row>
-              <Col xs={12} sm={12} md={6} lg={6} className="text-center mb-4">
+              <Col xs={12} sm={12} md={4} lg={4} className="text-center mb-4">
                 <h4 className="font-weight-light">My Requests ({total})</h4>
                 <hr />
                 {requests.length === 0 ? (
@@ -311,7 +398,51 @@ class Profile extends Component {
                   </Pagination>
                 )}
               </Col>
-              <Col xs={12} sm={12} md={6} lg={6} className="text-center mb-4">
+              <Col xs={12} sm={12} md={4} lg={4} className="text-center mb-4">
+                <h4 className="font-weight-light">
+                  My inactive Requests ({iTotal})
+                </h4>
+                <hr />
+                {inactives.length === 0 ? (
+                  <h4 className="font-weight-light mb-4">
+                    No inactives requests!
+                  </h4>
+                ) : (
+                  <ListGroup className="my-4">
+                    {inactives.map((inactive, i) => (
+                      <ListGroup.Item className="text-left" key={i}>
+                        <h4 key={i} className="description">
+                          {inactive.description.length > 50
+                            ? inactive.description.slice(0, 50) + "..."
+                            : inactive.description}
+                        </h4>
+                        <hr />
+                        <p>Location: {inactive.city}</p>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                )}
+                {voTotal <= 3 ? (
+                  ""
+                ) : (
+                  <Pagination size="sm" className="justify-content-center">
+                    <Pagination.Prev
+                      onClick={this.voChangePageDown}
+                      className={voCurrentPage === 0 ? "disabled" : ""}
+                    />
+                    <Pagination.Item disabled>
+                      {voCurrentPage + 1}
+                    </Pagination.Item>
+                    <Pagination.Next
+                      onClick={this.voChangePageUp}
+                      className={
+                        voCurrentPage === voPages - 1 ? "disabled" : ""
+                      }
+                    />
+                  </Pagination>
+                )}
+              </Col>
+              <Col xs={12} sm={12} md={4} lg={4} className="text-center mb-4">
                 <h4 className="font-weight-light">Voluntereed ({voTotal})</h4>
                 <hr />
                 {volunteered.length === 0 ? (
