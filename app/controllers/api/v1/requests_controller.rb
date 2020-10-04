@@ -30,6 +30,13 @@ class Api::V1::RequestsController < Api::V1::BaseController
       rtc.save
     end
 
+    #fulfilling the requests if they have 5 volunteers
+    @request_fulfilled = Request.joins(:volunteers).group("requests.id").having("count(volunteers.id) = ?", 5)
+    @request_fulfilled.each do |rf|
+      rf.status_id = 2
+      rf.save
+    end
+
   end
 
   def my_requests
@@ -38,7 +45,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     # Defining the page (@page can be used to return the current page), the page starts on 0
     @page = params[:page].to_i
     # Retrieve total of requests 
-    @total = Request.where( requests: {status_id: 1, user_id: params[:user_id]}).count
+    @total = Request.where( requests: {status_id: 1, isActive: true , user_id: params[:user_id]}).count
 
     # Getting the total pages
     @total_pages = @total / @limit
@@ -48,7 +55,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     end
 
     # Retrieve the requests from the db 
-    @request = Request.includes(:volunteers).where(requests: { status_id: 1, user_id: params[:user_id]}).offset(@page * @limit).limit(@limit).order(created_at: :desc)
+    @request = Request.includes(:volunteers).where(requests: { status_id: 1, isActive: true , user_id: params[:user_id]}).offset(@page * @limit).limit(@limit).order(created_at: :desc)
     # Render as JSON the requests, user and volunteers of each request, total requests, per_page, total_pages for pagination 
     render json: {request: @request.as_json({except: :user_id,
       :include => [volunteers: {only: [:id,:user_id]}],
