@@ -23,12 +23,13 @@ class Api::V1::RequestsController < Api::V1::BaseController
       :include => [user: {except: [:id, :password_digest, :email, :created_at, :updated_at]}, volunteers: {only: [:id,:user_id]}, request_type: {only: [:name]}, status: {only: [:name]}],
     }),total_requests: @total, per_page: @limit, total_pages: @total_pages}
     
-    #testing a new way of doing stuff
-    @request_to_close = Request.where('created_at > ?', Time.current) 
+    #Closing each request after 24 hours 
+    @request_to_close = Request.where("req_time < ? AND status_id = ? ", DateTime.now - 24.hours, 1)
     @request_to_close.each do |rtc|
       rtc.isActive = false
       rtc.save
     end
+
   end
 
   def my_requests
@@ -103,6 +104,6 @@ class Api::V1::RequestsController < Api::V1::BaseController
   private
 
   def requests_params
-    params.require(:request).permit(:description, :lat, :lng, :request_type_id, :user_id, :status_id, :city)
+    params.require(:request).permit(:description, :lat, :lng, :request_type_id, :user_id, :status_id, :city, :req_time, :isActive)
   end
 end

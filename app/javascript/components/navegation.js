@@ -96,7 +96,7 @@ class Navegation extends Component {
   onSubmit = (e) => {
     const { history } = this.props;
     e.preventDefault();
-    const { description, type } = this.state;
+    const { description, type, currentTime } = this.state;
     const user_id = JSON.parse(sessionStorage.getItem("User")).id;
     const lat = sessionStorage.getItem("currentLat");
     const lng = sessionStorage.getItem("currentLng");
@@ -116,14 +116,15 @@ class Navegation extends Component {
           lat: lat,
           status_id: 1,
           isActive: true,
-          city: city
+          city: city,
+          req_time: new Date().toLocaleString()
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           this.setState({
-            show: false
-          })
+            show: false,
+          });
           history.push(`/requests/${data.id}/messenger`);
           window.location.reload(false);
         })
@@ -165,6 +166,7 @@ class Navegation extends Component {
       description,
       msg,
       error,
+      currentTime
     } = this.state;
     return (
       <React.Fragment>
