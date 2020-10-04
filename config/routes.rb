@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get "requests_voluntereed", to: "requests#requests_voluntereed"
       get "my_disabled_requests", to: "requests#my_disabled_requests"
       get "counter", to: "requests#counter"
+      post "reset_request", to: "requests#reset_request"
       resources :requests, only: [:index, :show, :create, :destroy, :update] do
         
         resources :volunteers, only:  [:index, :show, :create, :destroy, :update]

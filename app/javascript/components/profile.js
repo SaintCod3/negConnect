@@ -418,26 +418,30 @@ class Profile extends Component {
                         </h4>
                         <hr />
                         <p>Location: {inactive.city}</p>
+                        <button
+                          onClick={() => this.chat(inactive.id)}
+                          className="greenCustom"
+                        >
+                          View
+                        </button>
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
                 )}
-                {voTotal <= 3 ? (
+                {iTotal <= 3 ? (
                   ""
                 ) : (
                   <Pagination size="sm" className="justify-content-center">
                     <Pagination.Prev
-                      onClick={this.voChangePageDown}
-                      className={voCurrentPage === 0 ? "disabled" : ""}
+                      onClick={this.iChangePageDown}
+                      className={iCurrentPage === 0 ? "disabled" : ""}
                     />
                     <Pagination.Item disabled>
-                      {voCurrentPage + 1}
+                      {iCurrentPage + 1}
                     </Pagination.Item>
                     <Pagination.Next
-                      onClick={this.voChangePageUp}
-                      className={
-                        voCurrentPage === voPages - 1 ? "disabled" : ""
-                      }
+                      onClick={this.iChangePageUp}
+                      className={iCurrentPage === iPages - 1 ? "disabled" : ""}
                     />
                   </Pagination>
                 )}

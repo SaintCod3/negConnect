@@ -15,7 +15,8 @@ import {
   PageItem,
   ListGroup,
   Navbar,
-  NavbarBrand
+  NavbarBrand,
+  ListGroupItem
 } from "react-bootstrap";
 
 class Messenger extends Component {
@@ -26,7 +27,7 @@ class Messenger extends Component {
       requests: [],
       msg: "",
       show: false,
-      request_title: ""
+      request_title: "",
     };
   }
   // let's clean the fetch using the Abortable Fetch!
@@ -74,6 +75,14 @@ class Messenger extends Component {
     history.push(`/requests/${request}/conversations/${conversation}/`);
   }
 
+  complete_request(request){
+
+  }
+
+  reset_request(){
+
+  }
+
   render() {
     const { conversations, requests, request_title } = this.state;
     if (!sessionStorage.getItem("Token") || !sessionStorage.getItem("User")) {
@@ -111,6 +120,13 @@ class Messenger extends Component {
                       <p>Status: {request.status.name}</p>
                     </ListGroup.Item>
                   ))}
+                  <ListGroup.Item>
+                    {requests.status_id === 1 && isActive === false ? (
+                      <button className="greenCustom">Re-pusblish</button>
+                    ) : (
+                      <button className="greenCustom">Complete</button>
+                    )}
+                  </ListGroup.Item>
                 </ListGroup>
               </Col>
               <Col xs={12} sm={12} md={6} lg={6} className="text-center mb-4">
@@ -122,8 +138,8 @@ class Messenger extends Component {
                   "There isn't any conversation for this request yet"
                 ) : (
                   <ListGroup className="my-4">
-                    {conversations.map((chat) => (
-                      <ListGroup.Item className="text-center">
+                    {conversations.map((chat, i) => (
+                      <ListGroup.Item className="text-center" key={i}>
                         <h4 className="font-weight-light text-left">
                           {chat.user.id === currentUser.id
                             ? request.user.first_name +
