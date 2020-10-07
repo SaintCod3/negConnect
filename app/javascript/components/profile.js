@@ -75,7 +75,6 @@ class Profile extends Component {
             perPage: data.per_page,
             pages: data.total_pages,
           });
-          console.log(data);
         })
         .catch((error) => {
           if (error.name !== "AbortError") {
@@ -101,7 +100,6 @@ class Profile extends Component {
             voPerPage: data.per_page,
             voPages: data.total_pages,
           });
-          console.log(data);
         })
         .catch((error) => {
           if (error.name !== "AbortError") {
@@ -127,7 +125,6 @@ class Profile extends Component {
             iPerPage: data.per_page,
             iPages: data.total_pages,
           });
-          console.log(data);
         })
         .catch((error) => {
           if (error.name !== "AbortError") {

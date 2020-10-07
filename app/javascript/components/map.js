@@ -46,7 +46,6 @@ class MapContainer extends Component {
       activeMarker: marker,
       show: true,
     });
-    console.log(this.state.selectedRequest)
   };
 
   onMapClicked = (props) => {
@@ -65,7 +64,6 @@ class MapContainer extends Component {
      )
        .then((response) => response.json())
        .then((data) => {
-         console.log(data.results[0]);
        });
   };
 
@@ -133,7 +131,6 @@ class MapContainer extends Component {
           perPage: data.per_page,
           pages: data.total_pages,
         });
-        console.log(data)
       })
       .catch((error) => {
         if (error.name !== "AbortError") {

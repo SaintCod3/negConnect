@@ -117,7 +117,7 @@ class Register extends Component {
             history.push("/login");
           });
       } else {
-        console.log("ERROR LMAO");
+        console.log(error);
       }
     });
   };

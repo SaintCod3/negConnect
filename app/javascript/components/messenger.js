@@ -26,8 +26,9 @@ class Messenger extends Component {
       conversations: [],
       requests: [],
       msg: "",
-      show: false,
       request_title: "",
+      show: false,
+      today: new Date()
     };
   }
   // let's clean the fetch using the Abortable Fetch!
@@ -37,24 +38,21 @@ class Messenger extends Component {
     const { history } = this.props;
     const user_id = JSON.parse(sessionStorage.getItem("User")).id;
     const { request_id } = this.props.match.params;
-    fetch(
-      `/api/v1/requests/${request_id}/conversations?user_id=${user_id}`,
-      {
-        method: "GET",
-        signal: this.controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("Token"),
-        },
-      }
-    )
+    fetch(`/api/v1/requests/${request_id}/conversations?user_id=${user_id}`, {
+      method: "GET",
+      signal: this.controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("Token"),
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.setState({
           conversations: data.conversations,
           requests: data.request,
-          request_title: data.request[0].description
+          request_title: data.request[0].description,
         });
         console.log(data)
       })
@@ -64,6 +62,10 @@ class Messenger extends Component {
         }
       });
   }
+
+  onClose = (e) => {
+    this.setState({ show: false });
+  };
 
   componentWillUnmount() {
     //We abort the fetch request when we unmount the component
@@ -75,16 +77,37 @@ class Messenger extends Component {
     history.push(`/requests/${request}/conversations/${conversation}/`);
   }
 
-  complete_request(request){
-
+  complete_request(request) {
+    console.log(request);
+    fetch(`/api/v1/requests/${request}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("Token"),
+      },
+      body: JSON.stringify({
+        isActive: false,
+        status_id: 2
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          show: true,
+          msg: "Your request was closed successfully",
+        });
+        const { history } = this.props;
+        history.push("/profile");
+      });
   }
 
-  reset_request(){
-
-  }
+  reset_request(request) {}
 
   render() {
-    const { conversations, requests, request_title } = this.state;
+    const { conversations, requests, request_title, show, msg, today} = this.state;
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
     if (!sessionStorage.getItem("Token") || !sessionStorage.getItem("User")) {
       return <Redirect to="/login" />;
     }
@@ -95,6 +118,18 @@ class Messenger extends Component {
       <React.Fragment>
         <style type="text/css">{this.custom()}</style>
         <Navegation />
+        <Toast
+          onClose={this.onClose}
+          show={show}
+          delay={3000}
+          autohide
+          className="alertStyled"
+        >
+          <Toast.Header>
+            <strong className="mr-auto">Information</strong>
+          </Toast.Header>
+          <Toast.Body>{msg}</Toast.Body>
+        </Toast>
         <Container fluid>
           <Row className="min-vh-50">
             <Col className="messengerWrap">
@@ -118,15 +153,20 @@ class Messenger extends Component {
                       <p>Location: {request.city}</p>
                       <p>Request type: {request.request_type.name}</p>
                       <p>Status: {request.status.name}</p>
+                      <hr />
+                      {request.status_id === 1 &&
+                      request.isActive === false && request.req_time < yesterday.toLocaleString() ? (
+                        <button className="greenCustom">Re-pusblish</button>
+                      ) : (
+                        <button
+                          className="greenCustom"
+                          onClick={() => this.complete_request(requests[0].id)}
+                        >
+                          Complete
+                        </button>
+                      )}
                     </ListGroup.Item>
                   ))}
-                  <ListGroup.Item>
-                    {requests.status_id === 1 && isActive === false ? (
-                      <button className="greenCustom">Re-pusblish</button>
-                    ) : (
-                      <button className="greenCustom">Complete</button>
-                    )}
-                  </ListGroup.Item>
                 </ListGroup>
               </Col>
               <Col xs={12} sm={12} md={6} lg={6} className="text-center mb-4">
