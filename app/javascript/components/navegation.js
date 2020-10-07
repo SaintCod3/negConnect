@@ -234,13 +234,12 @@ class Navegation extends Component {
         <Modal
           show={show}
           onHide={this.onClose}
-          backdrop="static"
           keyboard={false}
           size="md"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>Submit your request</Modal.Title>
           </Modal.Header>
           <Modal.Body>
