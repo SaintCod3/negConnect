@@ -13,5 +13,5 @@ class DirectUploadsController < ActiveStorage::DirectUploadsController
             url: blob.service_url_for_direct_upload,
             headers: blob.service_headers_for_direct_upload
         })
-
+    end
 end
