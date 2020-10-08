@@ -14,7 +14,7 @@ development:
 #  database: db/development.sqlite3
   adapter: postgresql
   encoding: unicode
-  databese: negConnect
+  database: negConnect
   host: localhost
   pool: 5
   username: postgres
@@ -32,9 +32,9 @@ production:
 #  database: db/production.sqlite3
   adapter: postgresql
   encoding: unicode
-  databese: MyDatabase_Production
-  host: localhost
+  database: d383j93e9mnico
+  host: ec2-52-21-0-111.compute-1.amazonaws.com
   pool: 5
-  username: postgres
+  username: gmloshxjgivltx
   password: <%= ENV['MyDatabase_Password'] %>
-  role: MyRole
+  role: Owner
