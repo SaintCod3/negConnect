@@ -1,1 +1,40 @@
 ** Message: 18:15:39.605: libsession.vala:50: DESKTOP_AUTOSTART_ID not set, session registration may be broken (not running budgie-desktop?)
+# _g_io_module_get_default: Found default implementation gvfs (GDaemonVfs) for ‘gio-vfs’
+# Failed to use specified server: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name :1.80 was not provided by any .service files
+# Falling back to default server.
+# _g_io_module_get_default: Found default implementation dconf (DConfSettingsBackend) for ‘gsettings-backend’
+# watch_fast: "/org/gnome/terminal/legacy/" (establishing: 0, active: 0)
+# unwatch_fast: "/org/gnome/terminal/legacy/" (active: 0, establishing: 1)
+# watch_established: "/org/gnome/terminal/legacy/" (establishing: 0)
+
+(solus-sc:301336): As-WARNING **: 06:58:45.138: com.github.cybre.budgie-haste-applet was of type addon but had no extends
+
+(solus-sc:301336): As-WARNING **: 06:58:45.138: com.github.cybre.budgie-screenshot-applet was of type addon but had no extends
+
+(solus-sc:301336): As-WARNING **: 06:58:45.138: com.github.danielpinto8zz6.budgie-calendar-applet.appdata.xml was of type addon but had no extends
+
+(solus-sc:301336): As-WARNING **: 06:58:45.177: com.github.cybre.budgie-haste-applet was of type addon but had no extends
+
+(solus-sc:301336): As-WARNING **: 06:58:45.177: com.github.cybre.budgie-screenshot-applet was of type addon but had no extends
+
+(solus-sc:301336): As-WARNING **: 06:58:45.177: com.github.danielpinto8zz6.budgie-calendar-applet.appdata.xml was of type addon but had no extends
+
+(solus-sc:301336): Gtk-WARNING **: 06:58:45.401: Theme directory 32x32/apps48x48/apps of theme solus-sc has no size field
+
+16 CPUs detected, restricting to 2 threads
+
+(solus-sc:304540): As-WARNING **: 07:13:57.366: com.github.cybre.budgie-haste-applet was of type addon but had no extends
+
+(solus-sc:304540): As-WARNING **: 07:13:57.366: com.github.cybre.budgie-screenshot-applet was of type addon but had no extends
+
+(solus-sc:304540): As-WARNING **: 07:13:57.366: com.github.danielpinto8zz6.budgie-calendar-applet.appdata.xml was of type addon but had no extends
+
+(solus-sc:304540): As-WARNING **: 07:13:57.376: com.github.cybre.budgie-haste-applet was of type addon but had no extends
+
+(solus-sc:304540): As-WARNING **: 07:13:57.376: com.github.cybre.budgie-screenshot-applet was of type addon but had no extends
+
+(solus-sc:304540): As-WARNING **: 07:13:57.376: com.github.danielpinto8zz6.budgie-calendar-applet.appdata.xml was of type addon but had no extends
+
+(solus-sc:304540): Gtk-WARNING **: 07:13:57.434: Theme directory 32x32/apps48x48/apps of theme solus-sc has no size field
+
+16 CPUs detected, restricting to 2 threads

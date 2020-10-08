@@ -5,6 +5,8 @@ ruby '2.7.0'
 
 gem 'pg'
 
+gem "google-cloud-storage", "~> 1.8", require: false
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use Puma as the app server
@@ -36,6 +38,10 @@ gem 'geocoder'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
+
+group :production do
+  gem 'pg'
 end
 
 group :development do
