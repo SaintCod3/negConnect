@@ -2,26 +2,12 @@ class Api::V1::RequestsController < Api::V1::BaseController
   before_action :authorized
   
   def index
-    # Limit of requests that we want to display 
-    @limit = 4
-    # Defining the page (@page can be used to return the current page), the page starts on 0
-    @page = params[:page].to_i
-    # Retrieve total of requests 
-    @total = Request.where( requests: { status_id: 1, isActive: true}).count
-
-    # Getting the total pages
-    @total_pages = @total / @limit
-    # If total % limit is greater than 0, add one more page 
-    if @total % @limit > 0 
-      @total_pages += 1
-    end
-
     # Retrieve the requests from the db 
-    @request = Request.includes(:volunteers).where(requests: { status_id: 1, isActive: true }).offset(@page * @limit).limit(@limit)
-    # Render as JSON the requests, user and volunteers of each request, total requests, per_page, total_pages for pagination 
+    @request = Request.includes(:volunteers).where(requests: { status_id: 1, isActive: true })
+    # Render as JSON the requests, user and volunteers of each request
     render json: {request: @request.as_json({except: :user_id,
       :include => [user: {except: [:id, :password_digest, :email, :created_at, :updated_at]}, volunteers: {only: [:id,:user_id]}, request_type: {only: [:name]}, status: {only: [:name]}],
-    }),total_requests: @total, per_page: @limit, total_pages: @total_pages}
+    })}
     
     #fulfilling the requests if they have 5 volunteers
     @request_fulfilled = Request.joins(:volunteers).group("requests.id").having("count(volunteers.id) = ?", 5)
@@ -37,6 +23,19 @@ class Api::V1::RequestsController < Api::V1::BaseController
       rtc.save
     end
   end
+
+  def range_requests
+    @lat = params[:lat]
+    @lng = params[:lng]
+    # Retrieve the requests from the db that are within the range 
+    @request = Request.includes(:volunteers).where(requests: { status_id: 1, isActive: true }).near([@lat, @lng], 200, min_radius: 40)
+    # Render as JSON the requests, user and volunteers of each request, total requests, per_page, total_pages for pagination 
+    render json: {request: @request.as_json({except: :user_id,
+      :include => [user: {except: [:id, :password_digest, :email, :created_at, :updated_at]}, volunteers: {only: [:id,:user_id]}, request_type: {only: [:name]}, status: {only: [:name]}],
+    })}
+    
+
+  end 
 
   def my_requests
     # Limit of requests that we want to display 
@@ -120,14 +119,17 @@ class Api::V1::RequestsController < Api::V1::BaseController
     @user = User.find(params[:user_id])
 
     if @request_to_reset && @request_to_reset.user_id == @user && @request_to_reset.req_time == DateTime.now - 24.hours && @request_to_reset.status_id == 1
-      @request_volunteers = Volunteer.where(request_id:
-    params[:request_id])
+      @request_volunteers = Volunteer.where(request_id: params[:request_id])
 
     if @request_volunteers
       @request_volunteers.destroy_all 
+      @request_to_reset.isActive = true
+      @request_to_reset.save
       render json: {}, status: 200
     else 
-      render json: {}, status: 403 
+      @request_to_reset.isActive = true
+      @request_to_reset.save
+      render json: {}, status: 200
       end
     end
   end

@@ -54,7 +54,6 @@ class Messenger extends Component {
           requests: data.request,
           request_title: data.request[0].description,
         });
-        console.log(data)
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
@@ -78,7 +77,6 @@ class Messenger extends Component {
   }
 
   complete_request(request) {
-    console.log(request);
     fetch(`/api/v1/requests/${request}`, {
       method: "PUT",
       headers: {
@@ -102,7 +100,29 @@ class Messenger extends Component {
       });
   }
 
-  reset_request(request) {}
+  reset_request(request) {
+    const user_id = JSON.parse(sessionStorage.getItem("User")).id;
+    fetch(`/api/v1/reset_request/${request}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("Token"),
+      },
+      body: JSON.stringify({
+        request_id: request,
+        user_id: user_id
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          show: true,
+          msg: "Your request was re-published successfully",
+        });
+        window.location.reload(false);
+      });
+  }
 
   render() {
     const { conversations, requests, request_title, show, msg, today} = this.state;
@@ -155,12 +175,18 @@ class Messenger extends Component {
                       <p>Status: {request.status.name}</p>
                       <hr />
                       {request.status_id === 1 &&
-                      request.isActive === false && request.req_time < yesterday.toLocaleString() ? (
-                        <button className="greenCustom">Re-pusblish</button>
+                      request.isActive === false &&
+                      request.req_time < yesterday.toLocaleString() ? (
+                        <button
+                          className="greenCustom"
+                          onClick={() => this.reset_request(request.id)}
+                        >
+                          Re-pusblish
+                        </button>
                       ) : (
                         <button
                           className="greenCustom"
-                          onClick={() => this.complete_request(requests[0].id)}
+                          onClick={() => this.complete_request(request.id)}
                         >
                           Complete
                         </button>

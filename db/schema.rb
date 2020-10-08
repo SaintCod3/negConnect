@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_04_145727) do
+ActiveRecord::Schema.define(version: 2020_10_08_023602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,8 +71,6 @@ ActiveRecord::Schema.define(version: 2020_10_04_145727) do
 
   create_table "requests", force: :cascade do |t|
     t.text "description"
-    t.string "lat"
-    t.string "lng"
     t.integer "user_id"
     t.integer "status_id"
     t.datetime "created_at", precision: 6, null: false
@@ -81,6 +79,8 @@ ActiveRecord::Schema.define(version: 2020_10_04_145727) do
     t.boolean "isActive", default: true
     t.string "city"
     t.datetime "req_time"
+    t.float "lat"
+    t.float "lng"
   end
 
   create_table "responders", force: :cascade do |t|

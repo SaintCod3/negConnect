@@ -33,8 +33,8 @@ class MapContainer extends Component {
       show: false,
       modal: false,
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
     this.volunteering = this.volunteering.bind(this);
+    this.rangeRequests = this.rangeRequests.bind(this);
     this.mapRef = React.createRef();
   }
   // let's clean the fetch using the Abortable Fetch!
@@ -56,14 +56,24 @@ class MapContainer extends Component {
       });
     }
   };
-  onDragEnd = (e, map) => {
-     const newLat = map.center.lat();
-     const newLng = map.center.lng();
-     fetch(
-       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newLat},${newLng}&sensor=true&key=AIzaSyBmtwEawgSNBX-fmf0rrgTtLZvW58Iragc`
-     )
+
+  rangeRequests = (e, map) => {
+    const newLat = map.center.lat();
+    const newLng = map.center.lng();
+     fetch(`/api/v1/range_requests?lat=${newLat}&lng=${newLng}`, {
+       method: "GET",
+       headers: {
+         "Content-Type": "application/json",
+         Accept: "application/json",
+         Authorization: "Bearer " + sessionStorage.getItem("Token"),
+       },
+     })
        .then((response) => response.json())
        .then((data) => {
+         console.log(data);
+         this.setState({
+           requests:[...this.state.requests,...data.request],
+         });
        });
   };
 
@@ -110,19 +120,14 @@ class MapContainer extends Component {
     if (!this.state.requests) {
       window.location.reload(false);
     }
-    fetch(
-      `/api/v1/requests?&page=${
-        this.state.currentPage
-      }`,
-      {
-        method: "GET",
-        signal: this.controller.signal,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("Token"),
-        },
-      }
-    )
+    fetch(`/api/v1/requests?&page=${this.state.currentPage}`, {
+      method: "GET",
+      signal: this.controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("Token"),
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -134,7 +139,7 @@ class MapContainer extends Component {
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
-          console.log(error)
+          console.log(error);
         }
       });
   }
@@ -209,7 +214,7 @@ class MapContainer extends Component {
           disableDefaultUI={false}
           onClick={this.onMapClicked}
           id="Map"
-          onDragend={this.onDragEnd}
+          onDragend={this.rangeRequests}
           ref={this.mapRef}
           styles={[
             {

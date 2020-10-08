@@ -73,11 +73,15 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    chronic (0.10.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     erubi (1.9.0)
     ffi (1.13.1)
+    geocoder (1.6.4)
+    geokit (1.13.1)
+    geokit-rails (2.3.1)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.3)
@@ -204,8 +208,6 @@ GEM
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    whenever (1.0.0)
-      chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.3.1)
@@ -218,6 +220,8 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  geocoder
+  geokit-rails
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   jwt
@@ -236,7 +240,6 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
-  whenever
 
 RUBY VERSION
    ruby 2.7.0p0
