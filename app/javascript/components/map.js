@@ -70,7 +70,6 @@ class MapContainer extends Component {
      })
        .then((response) => response.json())
        .then((data) => {
-         console.log(data);
          this.setState({
            requests:[...this.state.requests,...data.request],
          });
