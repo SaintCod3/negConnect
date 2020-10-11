@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       post "login", to: "users#login"
       post "register", to: "users#create"
       get 'my_requests', to: "requests#my_requests"
-      post "rails/active_storage/direct_upload", to: "direct_upload#create"
       get "requests_voluntereed", to: "requests#requests_voluntereed"
       get "my_disabled_requests", to: "requests#my_disabled_requests"
       get "counter", to: "requests#counter"

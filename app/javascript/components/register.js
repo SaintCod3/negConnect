@@ -86,7 +86,7 @@ class Register extends Component {
       password,
       password_confirmation,
     } = this.state;
-    if (password === password_confirmation && password.length >= 8 && first_name != "" && last_name != "" && email != "" && avatar !="" && govid != "") {
+    if (password === password_confirmation && password.length >= 8 && first_name != "" && last_name != "" && email != "" && avatar !="" && govID != "") {
       fetch("/api/v1/register", {
         method: "POST",
         headers: {
@@ -191,44 +191,47 @@ class Register extends Component {
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Avatar</Form.Label>
+                  <br />
+                  {avatarPrev === "" ? (
+                    <ReactFilestack
+                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      componentDisplayMode={{
+                        type: "button",
+                        customText: "Upload your Avatar",
+                        customClass: "greenCustom",
+                      }}
+                      onSuccess={(res) =>
+                        this.onSuccess(
+                          res.filesUploaded[0].url,
+                          res.filesUploaded[0].filename
+                        )
+                      }
+                    />
+                  ) : (
+                    <p>{avatarPrev}</p>
+                  )}
                 </Form.Group>
-                {avatarPrev === "" ? (
-                  <ReactFilestack
-                    apikey={"AepgBLjjBQUuhs4RBOUbYz"}
-                    componentDisplayMode={{
-                      type: "button",
-                      customText: "Upload your Avatar",
-                      customClass: "greenCustom mb-4",
-                    }}
-                    onSuccess={(res) =>
-                      this.onSuccess(
-                        res.filesUploaded[0].url,
-                        res.filesUploaded[0].filename
-                      )
-                    }
-                  />
-                ) : (
-                  <p>{avatarPrev}</p>
-                )}
-
                 <Form.Group>
                   <Form.Label>Government-approved ID</Form.Label>
+                  {govIDPrev === "" ? (
+                    <ReactFilestack
+                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      componentDisplayMode={{
+                        type: "button",
+                        customText: "Upload your Government-approved ID",
+                        customClass: "greenCustom",
+                      }}
+                      onSuccess={(res) =>
+                        this.onSuccessGov(
+                          res.filesUploaded[0].url,
+                          res.filesUploaded[0].filename
+                        )
+                      }
+                    />
+                  ) : (
+                    <p>{govIDPrev}</p>
+                  )}
                 </Form.Group>
-                {govIDPrev === "" ? ( <ReactFilestack
-                  apikey={"AepgBLjjBQUuhs4RBOUbYz"}
-                  componentDisplayMode={{
-                    type: "button",
-                    customText: "Upload your Government-approved ID",
-                    customClass: "greenCustom mb-4",
-                  }}
-                  onSuccess={(res) =>
-                    this.onSuccessGov(
-                      res.filesUploaded[0].url,
-                      res.filesUploaded[0].filename
-                    )
-                  }
-                />) : (<p>{govIDPrev}</p>)}
-               
                 <Form.Group>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
