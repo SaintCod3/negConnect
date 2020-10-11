@@ -72,13 +72,11 @@ textarea{
 }
 
 .rightSide{
-  height: 100vh;
   background:linear-gradient(rgba(95,159,95,0.6), rgba(66,111,66, 0.9));
   color: #395f39;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
   -moz-box-shadow: 2px 4px 5px 0px rgba(163, 163, 163, 0.6);
   box-shadow: 2px 2px 2px 0px rgba(163, 163, 163, 0.2);
-  padding: 25em;
 }
 
 .leftSide{
