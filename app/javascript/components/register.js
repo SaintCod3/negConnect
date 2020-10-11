@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { withRouter, Redirect, Link } from "react-router-dom";
 import LogoSmall from "images/logoSmall.png";
-import { DirectUpload } from "activestorage";
+import ReactFilestack from "filestack-react";
 
 class Register extends Component {
   constructor(props) {
@@ -20,14 +20,16 @@ class Register extends Component {
     this.state = {
       first_name: "",
       last_name: "",
-      govID: {},
+      govID: "",
       govIDPrev: "",
+      avatar: "",
+      avatarPrev: "",
       email: "",
       password: "",
       password_confirmation: "",
       show: false,
       alert: false,
-      msg: ""
+      msg: "",
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -35,10 +37,10 @@ class Register extends Component {
   onChange = (e) => {
     switch (e.target.name) {
       case "govID":
-      if (e.target.files.length > 0) {
+        if (e.target.files.length > 0) {
           if (e.target.files[0].name.length > 20) {
             this.setState({
-              govIDPrev: e.target.files[0].name.slice(0, 20) + "..."
+              govIDPrev: e.target.files[0].name.slice(0, 20) + "...",
             });
           } else {
             this.setState({
@@ -46,80 +48,69 @@ class Register extends Component {
             });
           }
           this.setState({
-            govID: e.target.files[0]
+            govID: e.target.files[0],
           });
         }
         break;
-         
+
       default:
         this.setState({ [e.target.name]: e.target.value });
     }
   };
   onClose = (e) => {
-    this.setState({ show: false });
+    this.setState({ show: false, alert: false});
   };
+  onSuccess = (avatar,avatarPrev) => {
+    this.setState({
+      avatar: avatar,
+      avatarPrev: avatarPrev
+    });
+  };
+  onSuccessGov = (govID, govIDPrev) => {
+    this.setState({
+      govID: govID,
+      govIDPrev: govIDPrev
+    });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
+    const { history } = this.props;
     const {
       first_name,
       last_name,
       govID,
+      avatar,
       email,
       password,
       password_confirmation,
     } = this.state;
-    if (password === password_confirmation && password.length >= 8){
-    fetch("/api/v1/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        first_name,
-        last_name,
-        email,
-        password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.uploadGovID(govID, data);
-      });
+    if (password === password_confirmation && password.length >= 8) {
+      fetch("/api/v1/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password,
+        avatar: avatar,
+        govid: govID
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          history.push("/login");
+        });
     } else {
       this.setState({
-        alert: true, msg: "Your password must be at least 8 characters long"
-      })
+        alert: true,
+        msg: "Your password must be at least 8 characters long",
+      });
     }
-  };
-
-  uploadGovID = (file, user) => {
-    const { history } = this.props;
-    const upload = new DirectUpload(
-      file,
-      "http://localhost:3000/rails/active_storage/direct_uploads"
-    );
-    upload.create((error, blob) => {
-      if (!error) {
-        this.setState({
-          show: true
-        });
-        fetch(`/api/v1/users/${user.user.id}/govID`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({ govID: blob.signed_id }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            history.push("/login");
-          });
-      } else {
-        console.log(error);
-      }
-    });
   };
 
   render() {
@@ -127,13 +118,14 @@ class Register extends Component {
       first_name,
       govID,
       govIDPrev,
+      avatarPrev,
       last_name,
       email,
       password,
       password_confirmation,
       show,
       alert,
-      msg
+      msg,
     } = this.state;
     if (sessionStorage.getItem("Token") || sessionStorage.getItem("User")) {
       return <Redirect to="/profile" />;
@@ -152,9 +144,7 @@ class Register extends Component {
             <Toast.Header>
               <strong className="mr-auto">Error</strong>
             </Toast.Header>
-            <Toast.Body>
-              {msg}
-            </Toast.Body>
+            <Toast.Body>{msg}</Toast.Body>
           </Toast>
           <Row>
             <Col
@@ -199,15 +189,46 @@ class Register extends Component {
                     }}
                   />
                 </Form.Group>
-                <Form.Label>GovID</Form.Label>
-                <Form.File
-                  type="file"
-                  name="govID"
-                  label={govIDPrev === "" ? "Upload your ID" : govIDPrev}
-                  onChange={this.onChange}
-                  custom
-                  className="mb-4 mt-2"
-                />
+                <Form.Group>
+                  <Form.Label>Avatar</Form.Label>
+                </Form.Group>
+                {avatarPrev === "" ? (
+                  <ReactFilestack
+                    apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                    componentDisplayMode={{
+                      type: "button",
+                      customText: "Upload your Avatar",
+                      customClass: "greenCustom mb-4",
+                    }}
+                    onSuccess={(res) =>
+                      this.onSuccess(
+                        res.filesUploaded[0].url,
+                        res.filesUploaded[0].filename
+                      )
+                    }
+                  />
+                ) : (
+                  <p>{avatarPrev}</p>
+                )}
+
+                <Form.Group>
+                  <Form.Label>Government-approved ID</Form.Label>
+                </Form.Group>
+                {govIDPrev === "" ? ( <ReactFilestack
+                  apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                  componentDisplayMode={{
+                    type: "button",
+                    customText: "Upload your Government-approved ID",
+                    customClass: "greenCustom mb-4",
+                  }}
+                  onSuccess={(res) =>
+                    this.onSuccessGov(
+                      res.filesUploaded[0].url,
+                      res.filesUploaded[0].filename
+                    )
+                  }
+                />) : (<p>{govIDPrev}</p>)}
+               
                 <Form.Group>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control

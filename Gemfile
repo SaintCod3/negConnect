@@ -5,8 +5,6 @@ ruby '2.7.0'
 
 gem 'pg'
 
-gem "google-cloud-storage", "~> 1.8", require: false
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use Puma as the app server

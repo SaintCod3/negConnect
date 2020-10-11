@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter, Redirect, Route } from "react-router-dom";
 import Navegation from "./navegation";
-import { DirectUpload } from "activestorage";
 import { Container, Col, Row, Image, Toast, Form, Button, Spinner} from "react-bootstrap";
+import ReactFilestack from "filestack-react";
 
 class Edit_profile extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class Edit_profile extends Component {
     this.state = {
       first_name: "",
       last_name: "",
-      avatar: {},
+      avatar: "",
       avatarPrev: "",
       email: "",
       password: "",
@@ -74,15 +74,20 @@ class Edit_profile extends Component {
   onClose = (e) => {
     this.setState({ alert: false });
   };
+
+  onSuccess = (avatar, avatarPrev) => {
+    this.setState({
+      avatar: avatar,
+      avatarPrev: avatarPrev
+    })
+  }
   editProfile = (e) => {
     e.preventDefault();
     e.target.reset();
-    this.setState({avatarPrev: ""})
     const {
       first_name,
       last_name,
       avatar,
-      avatarPrev,
       email,
       password,
       password_confirmation,
@@ -104,48 +109,16 @@ class Edit_profile extends Component {
         last_name,
         email,
         password,
+        avatar
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        if(!avatarPrev)
-        {
           sessionStorage.setItem("User", JSON.stringify(data.user));
           window.location.reload(false);
-        } else {
-          this.uploadFile(avatar, data);
-        }
       });
   };
 }
-
-  uploadFile = (file, user) => {
-    const upload = new DirectUpload(
-      file,
-      "http://localhost:3000/rails/active_storage/direct_uploads"
-    );
-    upload.create((error, blob) => {
-      if (!error) {
-        this.setState({ show: true });
-        fetch(`/api/v1/users/${user.user.id}/avatar`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({ avatar: blob.signed_id }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            sessionStorage.setItem("Avatar", data.avatar_url);
-            sessionStorage.setItem("User", JSON.stringify(data.user));
-            window.location.reload(false);
-          });
-      } else {
-        this.setState({alert: true})
-      }
-    });
-  };
 
   render() {
     const {
@@ -164,8 +137,8 @@ class Edit_profile extends Component {
       return <Redirect to="/login" />;
     }
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
-    const userAvatar = sessionStorage.getItem("Avatar");
-    const userGovID = sessionStorage.getItem("govID")
+    const userAvatar = JSON.parse(sessionStorage.getItem("User")).avatar;
+    const userGovID = JSON.parse(sessionStorage.getItem("User")).govid;
 
     return (
       <React.Fragment>
@@ -181,9 +154,7 @@ class Edit_profile extends Component {
           <Toast.Header>
             <strong className="mr-auto">Error</strong>
           </Toast.Header>
-          <Toast.Body>
-            {msg}
-          </Toast.Body>
+          <Toast.Body>{msg}</Toast.Body>
         </Toast>
         <Container fluid>
           <Row className=" text-center min-vh-50">
@@ -199,9 +170,7 @@ class Edit_profile extends Component {
               <Col xs={12} sm={12} md={6} lg={4} className="text-center mb-4">
                 <h4 className="font-weight-light">Contact</h4>
                 <hr />
-                <h6 className="font-weight-light">
-                  {currentUser.email}
-                </h6>
+                <h6 className="font-weight-light">{currentUser.email}</h6>
 
                 <h4 className="font-weight-light mt-4">ID</h4>
                 <hr />
@@ -245,17 +214,28 @@ class Edit_profile extends Component {
                       }}
                     />
                   </Form.Group>
-                  <Form.Label>Avatar</Form.Label>
-                  <Form.File
-                    type="file"
-                    name="avatar"
-                    label={
-                      avatarPrev === "" ? "Upload your avatar" : avatarPrev
-                    }
-                    onChange={this.onChange}
-                    custom
-                    className="mb-4 mt-2"
-                  />
+                  <Form.Group>
+                    <Form.Label>Avatar</Form.Label>
+                  </Form.Group>
+                  {avatarPrev === "" ? (
+                    <ReactFilestack
+                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      componentDisplayMode={{
+                        type: "button",
+                        customText: "Upload your Avatar",
+                        customClass: "greenCustom mb-4",
+                      }}
+                      onSuccess={(res) =>
+                        this.onSuccess(
+                          res.filesUploaded[0].url,
+                          res.filesUploaded[0].filename
+                        )
+                      }
+                    />
+                  ) : (
+                    <p>{avatarPrev}</p>
+                  )}
+
                   <Form.Group>
                     <Form.Label>Current Password</Form.Label>
                     <Form.Control

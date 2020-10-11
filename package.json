@@ -13,6 +13,7 @@
     "activestorage": "^5.2.4-3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^4.5.0",
+    "filestack-react": "^3.2.1",
     "google-maps-react": "^2.0.6",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",

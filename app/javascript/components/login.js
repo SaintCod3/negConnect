@@ -94,8 +94,6 @@ class Login extends Component {
         if (data) {
           sessionStorage.setItem("Token", data.token);
           sessionStorage.setItem("User", JSON.stringify(data.user));
-          sessionStorage.setItem("Avatar", data.avatar);
-          sessionStorage.setItem("govID", data.govID);
           history.push("/map");
         }
       })

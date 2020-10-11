@@ -151,14 +151,11 @@ class Navegation extends Component {
   logout = (e) => {
     sessionStorage.removeItem("Token");
     sessionStorage.removeItem("User");
-    sessionStorage.removeItem("Avatar");
-    sessionStorage.removeItem("govID");
     this.props.history.push("/login");
   };
 
   render() {
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
-    const userAvatar = sessionStorage.getItem("Avatar");
     const {
       counter,
       show,

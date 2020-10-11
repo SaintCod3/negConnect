@@ -333,7 +333,7 @@ class Profile extends Component {
       return <Redirect to="/login" />;
     }
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
-    const userAvatar = sessionStorage.getItem("Avatar");
+    const userAvatar = JSON.parse(sessionStorage.getItem("User")).avatar;
     return (
       <React.Fragment>
         <style type="text/css">{this.custom()}</style>
