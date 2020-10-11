@@ -158,7 +158,7 @@ class MapContainer extends Component {
           }}
           icon={{
             url: `http://maps.google.com/mapfiles/ms/icons/${
-              request.request_type_id === 1 ? "blue-dot" : "red-dot"
+              request.request_type.name === "One-time task" ? "blue-dot" : "red-dot"
             }.png`,
           }}
           onClick={this.onMarkerClick}

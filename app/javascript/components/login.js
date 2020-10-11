@@ -117,7 +117,7 @@ class Login extends Component {
             show={show}
             delay={3000}
             autohide
-            className="alertStyled"
+            className="alertStyled toast"
           >
             <Toast.Header>
               <strong className="mr-auto">Error</strong>
