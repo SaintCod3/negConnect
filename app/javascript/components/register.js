@@ -86,7 +86,7 @@ class Register extends Component {
       password,
       password_confirmation,
     } = this.state;
-    if (password === password_confirmation && password.length >= 8) {
+    if (password === password_confirmation && password.length >= 8 && first_name != "" && last_name != "" && email != "" && avatar !="" && govid != "") {
       fetch("/api/v1/register", {
         method: "POST",
         headers: {
