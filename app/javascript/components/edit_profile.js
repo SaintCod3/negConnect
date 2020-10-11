@@ -93,7 +93,8 @@ class Edit_profile extends Component {
       password_confirmation,
     } = this.state;
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
-    if (password === "" ){
+
+    if (password === ""){
       this.setState({
         alert: true,
         msg: "Please enter your current password to save your changes"

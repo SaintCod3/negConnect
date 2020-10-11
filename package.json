@@ -26,8 +26,18 @@
     "react-router-dom": "^5.2.0",
     "turbolinks": "^5.2.0"
   },
-  "version": "0.1.0",
+  "version": "1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
+  },
+  "description": "An aid platform for your neighborhood",
+  "main": "index.js",
+  "repository": "git@github.com:SaintCod3/negConnect.git",
+  "author": "Damian Martin",
+  "license": "MIT",
+  "scripts": {
+    "build": "cd client && yarn install && yarn build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "postinstall": "yarn build && yarn deploy && echo 'Client built!'"
   }
 }
