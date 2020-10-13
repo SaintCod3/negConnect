@@ -175,8 +175,7 @@ class Messenger extends Component {
                       <p>Status: {request.status.name}</p>
                       <hr />
                       {request.status_id === 1 &&
-                      request.isActive === false &&
-                      request.req_time < yesterday.toLocaleString() ? (
+                      request.isActive === false  ? (
                         <button
                           className="greenCustom"
                           onClick={() => this.reset_request(request.id)}
