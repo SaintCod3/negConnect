@@ -32,7 +32,7 @@ class Edit_profile extends Component {
       this.setState({
         first_name: currentUser.first_name,
         last_name: currentUser.last_name,
-        avatar:sessionStorage.getItem("Avatar"),
+        avatar: currentUser.avatar,
         email: currentUser.email
       });
     }
@@ -64,12 +64,6 @@ class Edit_profile extends Component {
       default:
         this.setState({ [e.target.name]: e.target.value });
     }
-        if (first_name === "" || last_name === "") {
-          this.setState({
-            first_name: currentUser.first_name,
-            last_name: currentUser.last_name,
-          });
-        }
   };
   onClose = (e) => {
     this.setState({ alert: false });
@@ -88,38 +82,52 @@ class Edit_profile extends Component {
       first_name,
       last_name,
       avatar,
+      avatarPrev,
       email,
       password,
       password_confirmation,
     } = this.state;
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
-
-    if (password === ""){
+    // If the first name is empty, set the value to the current first name
+    if (first_name === "") {
+      this.setState({
+        first_name: currentUser.first_name,
+      }); // If the last name is empty, set the value to the current last name
+    } else if (last_name == "") {
+      this.setState({
+        last_name: currentUser.last_name,
+      });
+    } else if (avatarPrev == "") {
+      this.setState({
+        avatar: currentUser.avatar,
+      });
+    }
+    if (password === "") {
       this.setState({
         alert: true,
-        msg: "Please enter your current password to save your changes"
-      })
+        msg: "Please enter your current password to save your changes",
+      });
     } else {
-    fetch(`/api/v1/users/${currentUser.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        first_name,
-        last_name,
-        email,
-        password,
-        avatar
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+      fetch(`/api/v1/users/${currentUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name,
+          last_name,
+          email,
+          password,
+          avatar,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
           sessionStorage.setItem("User", JSON.stringify(data.user));
           window.location.reload(false);
-      });
-  };
-}
+        });
+    }
+  }
 
   render() {
     const {

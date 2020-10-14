@@ -124,7 +124,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
       @request_volunteers.destroy_all 
       @request_conversation.destroy_all
       @request_to_reset.isActive = true
-      @request_to_reset.req_time = Time.now
+      @request_to_reset.req_time = Time.now 
       @request_to_reset.save
       render json: {}, status: 200
     end
