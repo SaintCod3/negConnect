@@ -1,6 +1,6 @@
 .avatar{
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border: 1px solid rgba(163, 163, 163, 0.6);
   box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.096);
 
@@ -132,6 +132,8 @@ textarea{
 
 .alertStyled{
   position: absolute; 
+  background: #fff;
+  padding: 2em;
   top: 5px; 
   right: 0px; 
   margin: 10px; 
