@@ -24,10 +24,6 @@ class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedRequest: {},
-      perPage: 0,
-      total: 0,
-      pages: 0,
-      currentPage: 0,
       msg: "",
       error: false,
       show: false,
@@ -130,10 +126,7 @@ class MapContainer extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          requests: data.request,
-          total: data.total_requests,
-          perPage: data.per_page,
-          pages: data.total_pages,
+          requests: data.request
         });
       })
       .catch((error) => {
@@ -189,10 +182,6 @@ class MapContainer extends Component {
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
     const {
       requests,
-      perPage,
-      total,
-      pages,
-      currentPage,
       msg,
       error,
       show,
