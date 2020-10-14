@@ -117,16 +117,20 @@ class Api::V1::RequestsController < Api::V1::BaseController
   def reset_request
     @request_to_reset = Request.find(params[:request_id])
     @user = User.find(params[:user_id])
-    @request_volunteers = Volunteer.where(request_id: params[:request_id])
-    @request_conversations = Conversation.where(request_id: params[:request_id])
 
-    if @request_to_reset && @request_to_reset.user_id == @user && @request_to_reset.req_time < DateTime.now - 24.hours && @request_to_reset.status_id == 1
-      @request_volunteers.destroy_all
-      @request_volunteers.save
+    if @request_to_reset && @request_to_reset.user_id == @user && @request_to_reset.req_time == DateTime.now - 24.hours && @request_to_reset.status_id == 1
+      @request_volunteers = Volunteer.where(request_id: params[:request_id])
+
+    if @request_volunteers
+      @request_volunteers.destroy_all 
       @request_to_reset.isActive = true
       @request_to_reset.save
-      @request_conversations.destroy_all
-      @request_conversations.save
+      render json: {}, status: 200
+    else 
+      @request_to_reset.isActive = true
+      @request_to_reset.save
+      render json: {}, status: 200
+      end
     end
   end
 
