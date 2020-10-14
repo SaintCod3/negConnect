@@ -102,7 +102,7 @@ class Messenger extends Component {
 
   reset_request(request) {
     const user_id = JSON.parse(sessionStorage.getItem("User")).id;
-    fetch(`/api/v1/reset_request/${request}`, {
+    fetch(`/api/v1/reset_request`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
