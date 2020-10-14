@@ -124,6 +124,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
       @request_volunteers.save
       @request_to_reset.isActive = true
       @request_to_reset.save
+    end
   end
 
   def counter
