@@ -115,7 +115,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def reset_request
-    @request_to_reset = Request.find(params[:request_id])
+    @request_to_reset = Request.find(params[:id])
     @user = User.find(params[:user_id])
     @request_conversation = Conversation.where("request_id = ?", params[:request_id])
     @request_volunteers = Volunteer.where("request_id = ?", params[:request_id])
