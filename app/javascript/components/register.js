@@ -96,7 +96,7 @@ class Register extends Component {
         error: 1,
       });
    }
-   if (password === password_confirmation && password.length >= 8){
+   if (password != password_confirmation && password.length < 8){
       this.setState({
         alert: true,
         error: 1

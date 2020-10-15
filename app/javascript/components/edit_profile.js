@@ -39,12 +39,18 @@ class Edit_profile extends Component {
   }
 
   onChange = (e) => {
-      this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
   onClose = (e) => {
     this.setState({ alert: false });
   };
 
+  onSuccess = (avatar, avatarPrev) => {
+    this.setState({
+      avatar: avatar,
+      avatarPrev: avatarPrev
+    })
+  }
 
   editProfile = (e) => {
     e.preventDefault();
