@@ -116,10 +116,6 @@ class Messenger extends Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        this.setState({
-          show: true,
-          msg: "Your request was re-published successfully",
-        });
         window.location.reload(false);
       });
   }

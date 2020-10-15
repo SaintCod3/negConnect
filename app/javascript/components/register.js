@@ -29,6 +29,7 @@ class Register extends Component {
       password_confirmation: "",
       show: false,
       alert: false,
+      error: "",
       msg: "",
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -83,10 +84,19 @@ class Register extends Component {
       govID,
       avatar,
       email,
+      error,
       password,
       password_confirmation,
     } = this.state;
-    if (password === password_confirmation && password.length >= 8 && first_name != "" && last_name != "" && email != "" && avatar !="" && govID != "") {
+
+   if (password === password_confirmation && password.length >= 8 || avatar === "" || govID === ""){
+      this.setState({
+        alert: true,
+        error: error + 1
+      });
+    }
+    console.log(error)
+    if (error === 0) {
       fetch("/api/v1/register", {
         method: "POST",
         headers: {
@@ -103,12 +113,15 @@ class Register extends Component {
       })
         .then((response) => response.json())
         .then((data) => {
+            this.setState({
+              alert: true,
+              msg: "Account created!",
+            });
           history.push("/login");
         });
     } else {
       this.setState({
-        alert: true,
-        msg: "Your password must be at least 8 characters long",
+        alert: true
       });
     }
   };
@@ -125,6 +138,7 @@ class Register extends Component {
       password_confirmation,
       show,
       alert,
+      error, 
       msg,
     } = this.state;
     if (sessionStorage.getItem("Token") || sessionStorage.getItem("User")) {
@@ -142,9 +156,15 @@ class Register extends Component {
             className="alertStyled"
           >
             <Toast.Header>
-              <strong className="mr-auto">Error</strong>
+              <strong className="mr-auto">
+                {error === 0 ? "Success!" : "Error"}
+              </strong>
             </Toast.Header>
-            <Toast.Body>{msg}</Toast.Body>
+            <Toast.Body>
+              {error === 0
+                ? msg
+                : "Missing Parameter(s), please make sure that you have added all the information and uploaded an avatar and your GovID"}
+            </Toast.Body>
           </Toast>
           <Row>
             <Col
@@ -160,6 +180,7 @@ class Register extends Component {
                 <Form.Group>
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     name="first_name"
                     onChange={this.onChange}
@@ -176,6 +197,7 @@ class Register extends Component {
                 <Form.Group>
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     name="last_name"
                     onChange={this.onChange}
@@ -213,6 +235,7 @@ class Register extends Component {
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Government-approved ID</Form.Label>
+                  <br />
                   {govIDPrev === "" ? (
                     <ReactFilestack
                       apikey={"AepgBLjjBQUuhs4RBOUbYz"}
@@ -237,6 +260,7 @@ class Register extends Component {
                   <Form.Control
                     type="email"
                     name="email"
+                    required
                     onChange={this.onChange}
                     style={{
                       border: "none",
@@ -251,6 +275,7 @@ class Register extends Component {
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     name="password"
                     onChange={this.onChange}
@@ -267,6 +292,7 @@ class Register extends Component {
                 <Form.Group>
                   <Form.Label>Password Confirmation</Form.Label>
                   <Form.Control
+                    required
                     type="password"
                     name="password_confirmation"
                     onChange={this.onChange}
