@@ -39,30 +39,7 @@ class Edit_profile extends Component {
   }
 
   onChange = (e) => {
-     const {
-       first_name,
-       last_name
-     } = this.state;
-    const currentUser = JSON.parse(sessionStorage.getItem("User"));
-    switch (e.target.name) {
-      case "avatar":
-        if (e.target.files.length > 0) {
-          if ( e.target.files[0].name.length > 20) {
-            this.setState({
-              avatarPrev: e.target.files[0].name.slice(0, 20) + "...",
-            });
-          } else {
-             this.setState({
-               avatarPrev: e.target.files[0].name
-             });
-          }
-          this.setState({
-            avatar: e.target.files[0]
-          });
-        }
-        break;
-      default:
-        this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [e.target.name]: e.target.value });
     }
   };
   onClose = (e) => {
@@ -85,7 +62,6 @@ class Edit_profile extends Component {
       avatarPrev,
       email,
       password,
-      password_confirmation,
     } = this.state;
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
     // If the first name is empty, set the value to the current first name
@@ -93,11 +69,13 @@ class Edit_profile extends Component {
       this.setState({
         first_name: currentUser.first_name,
       }); // If the last name is empty, set the value to the current last name
-    } else if (last_name == "") {
+    }
+    if (last_name == "") {
       this.setState({
         last_name: currentUser.last_name,
       });
-    } else if (avatarPrev == "") {
+    }
+     if (avatarPrev == "") {
       this.setState({
         avatar: currentUser.avatar,
       });
