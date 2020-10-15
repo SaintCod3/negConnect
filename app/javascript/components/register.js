@@ -90,19 +90,13 @@ class Register extends Component {
       password,
       password_confirmation,
     } = this.state;
-   if (avatarPrev === "" || govIDPrev === ""){
-       this.setState({
-        alert: true,
-        error: 1,
-      });
-   }
+   
    if (password != password_confirmation && password.length < 8){
       this.setState({
         alert: true,
         error: 1
       });
-    }
-    if (error === 0) {
+    } else {
       fetch("/api/v1/register", {
         method: "POST",
         headers: {
@@ -125,10 +119,6 @@ class Register extends Component {
             });
           history.push("/login");
         });
-    } else {
-      this.setState({
-        alert: true
-      });
     }
   };
 
