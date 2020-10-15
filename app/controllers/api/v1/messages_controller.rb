@@ -1,7 +1,7 @@
 class Api::V1::MessagesController < Api::V1::BaseController
   before_action :authorized
   def index
-    @chats = Chat.where("request_id": params[:request_id])
+    @chats = Message.where("request_id": params[:request_id])
     @request = Request.where("id": params[:request_id])
     if verified_user or requestor 
      render json: {chat: @chats.as_json({except: [:id, :request_id, :updated_at],
