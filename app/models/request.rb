@@ -6,4 +6,5 @@ class Request < ApplicationRecord
     has_many :volunteers, dependent: :destroy 
     belongs_to :user
     has_many :conversations, dependent: :destroy 
+    validates :user_id, :description, :request_type_id, :status_id, :lat, :lng, :req_time,   presence: true
 end
