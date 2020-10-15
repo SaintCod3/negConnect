@@ -82,20 +82,26 @@ class Register extends Component {
       first_name,
       last_name,
       govID,
+      govIDPrev,
+      avatarPrev,
       avatar,
       email,
       error,
       password,
       password_confirmation,
     } = this.state;
-
-   if (password === password_confirmation && password.length >= 8 || avatar === "" || govID === ""){
+   if (avatarPrev === "" || govIDPrev === ""){
+       this.setState({
+        alert: true,
+        error: 1,
+      });
+   }
+   if (password === password_confirmation && password.length >= 8){
       this.setState({
         alert: true,
-        error: error + 1
+        error: 1
       });
     }
-    console.log(error)
     if (error === 0) {
       fetch("/api/v1/register", {
         method: "POST",
