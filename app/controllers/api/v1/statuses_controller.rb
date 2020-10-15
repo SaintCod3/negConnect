@@ -1,4 +1,6 @@
 class Api::V1::StatusesController < Api::V1::BaseController
+  before_action :authorized
+  
   def index
     respond_with Status.all
   end

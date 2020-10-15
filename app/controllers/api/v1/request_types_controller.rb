@@ -1,4 +1,6 @@
 class Api::V1::RequestTypesController < Api::V1::BaseController
+  before_action :authorized
+  
   def index
     respond_with RequestType.all
   end
