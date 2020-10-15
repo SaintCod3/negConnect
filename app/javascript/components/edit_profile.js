@@ -39,7 +39,17 @@ class Edit_profile extends Component {
   }
 
   onChange = (e) => {
+     const {
+       first_name,
+       last_name,
+     } = this.state;
     this.setState({ [e.target.name]: e.target.value });
+     if (first_name === "" || last_name === "") {
+       this.setState({
+         first_name: currentUser.first_name,
+         last_name: currentUser.last_name,
+       });
+     }
   };
   onClose = (e) => {
     this.setState({ alert: false });
@@ -65,22 +75,7 @@ class Edit_profile extends Component {
     } = this.state;
     const currentUser = JSON.parse(sessionStorage.getItem("User"));
     // If the first name is empty, set the value to the current first name
-    if (first_name === "") {
-      this.setState({
-        first_name: currentUser.first_name,
-      });
-    // If the last name is empty, set the value to the current last name
-    }
-    if (last_name == "") {
-      this.setState({
-        last_name: currentUser.last_name,
-      });
-    }
-     if (avatarPrev == "") {
-      this.setState({
-        avatar: currentUser.avatar,
-      });
-    }
+
     if (password === "") {
       this.setState({
         alert: true,
