@@ -40,7 +40,6 @@ class Edit_profile extends Component {
 
   onChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
-    }
   };
   onClose = (e) => {
     this.setState({ alert: false });
@@ -68,7 +67,8 @@ class Edit_profile extends Component {
     if (first_name === "") {
       this.setState({
         first_name: currentUser.first_name,
-      }); // If the last name is empty, set the value to the current last name
+      });
+    // If the last name is empty, set the value to the current last name
     }
     if (last_name == "") {
       this.setState({
