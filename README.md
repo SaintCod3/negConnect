@@ -2,3 +2,5 @@
 
 # Project 8 (Full Stack path, OC)
 Rails API + React (Front-end)
+
+Demo: https://negconnect.herokuapp.com
