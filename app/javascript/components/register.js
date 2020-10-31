@@ -212,7 +212,7 @@ class Register extends Component {
                   <br />
                   {avatarPrev === "" ? (
                     <ReactFilestack
-                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      apikey={"YOUR FILESTACK API KEY HERE"}
                       componentDisplayMode={{
                         type: "button",
                         customText: "Upload your Avatar",
@@ -234,7 +234,7 @@ class Register extends Component {
                   <br />
                   {govIDPrev === "" ? (
                     <ReactFilestack
-                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      apikey={"YOUR FILESTACK API KEY HERE"}
                       componentDisplayMode={{
                         type: "button",
                         customText: "Upload your Government-approved ID",
