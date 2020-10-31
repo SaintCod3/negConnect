@@ -202,7 +202,7 @@ class Edit_profile extends Component {
                   </Form.Group>
                   {avatarPrev === "" ? (
                     <ReactFilestack
-                      apikey={"AepgBLjjBQUuhs4RBOUbYz"}
+                      apikey={"YOUR FILESTACK API KEY HERE"}
                       componentDisplayMode={{
                         type: "button",
                         customText: "Upload your Avatar",
